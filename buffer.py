@@ -200,6 +200,7 @@ for config in configs:
             f_in  = open(INPUT_FILE,  'r')                    # Open   READ  input  file handle
             f_out = open(OUTPUT_FILE, 'w')                    # Create WRITE output file handle
         
+            print("f_in ", f_in)
             print("%s Starting %d producers using '%s' ..." % (analyze.label("Threads"), config.producers, p_target.__name__))
             for x in range(config.producers):                 # Create producer threads, have them run the 'producer' function
                 thread = threading.Thread(target=p_target, args=(x+1,f_in,aBuffer,locks), name="Producer-%d" % (x+1))           # Setup thread, function, args, and name

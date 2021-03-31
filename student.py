@@ -37,11 +37,30 @@ def student_producer(producer_num, f_in, buffer, locks):
         #   - While you may add code in and around the labeled P-# lines below, do NOT edit or re-order the P-# lines.  
         #     Changes to those lines will break the tests and grading code.
 
-        line = "999999"                                                    # Remove this line and structure your code such that you read a line of data from f_in into the variable 'line' 
+        locks.producer_file_in.acquire() #locks file for reading
+        line = f_in.readline()                                                    # Remove this line and structure your code such that you read a line of data from f_in into the variable 'line' 
         try:              item  = int(line)                                # LINE P-1:  DO NOT CHANGE OR REORDER THIS LINE RELATIVE TO P-# LABELED LINES!  Turns the read input line into an integer 'item'
         except Exception: item  = 0                                        # LINE P-2:  DO NOT CHANGE OR REORDER THIS LINE RELATIVE TO P-# LABELED LINES!  If input item bad, sets to invalid.  With good code, this shouldn't happen.  (e.g., shouldn't try to use data beyond end of file)
         buffer.ITEMS[buffer.IN] = (item, producer_num)                     # LINE P-3:  DO NOT CHANGE OR REORDER THIS LINE RELATIVE TO P-# LABELED LINES!  Inserts a 2-part tuple into buffer.   
         return 0                                                           # Remove this line.  It's temporarily here to force a termination (e.g., avoid an infinite loop).  You'll need to write better, appropriate code to stop the producer thread.
+
+        # item next_produced
+        i = 1
+        while i==1:
+           # produce an item in next_produced
+           while((buffer.IN + 1) % buffer.NUM_SLOTS) == buffer.OUT:
+               # do nothing, FULL 
+            
+            buffer.ITEMS[buffer.IN] = (item, producer_num)
+            buffer.IN = (buffer.IN + 1) % buffer.NUM_SLOTS
+
+            
+            
+
+
+
+
+
 
         # ------ PLACE YOUR PRODUCER CODE ABOVE THIS LINE ------
 
